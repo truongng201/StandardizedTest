@@ -3,6 +3,7 @@ import Pagination from "../../components/PaginationPart";
 import Tools from "../../components/Tools";
 import QuestionPart from "../../components/QuestionPart";
 import { Row, Col, Container } from "reactstrap";
+import AnswersPart from "../../components/AnswersPart";
 
 const ACTMath = (props) => {
   const { data } = props;
@@ -17,7 +18,7 @@ const ACTMath = (props) => {
             ></QuestionPart>
           </Col>
           <Col style={{ overflowY: "auto", height: "450px" }}>
-            {/* {Answerpart} */}
+            <AnswersPart></AnswersPart>
           </Col>
         </Row>
       </Container>

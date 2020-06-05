@@ -3,8 +3,7 @@ import { useSpring, animated } from "react-spring";
 import { useState } from "react";
 import LogoPage from "../img/LogoPage2.png";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { changeCurrentTest } from "../redux/Actions";
+
 import NavBar from "./NavBar";
 
 const MainNavbar = (props) => {
@@ -13,7 +12,7 @@ const MainNavbar = (props) => {
   window.onscroll = function (ev) {
     setPagePosition(window.pageYOffset);
   };
-  const dispatch = useDispatch();
+
   let styleNavbar = useSpring({
     width: "100%",
     height: "auto",
@@ -39,7 +38,6 @@ const MainNavbar = (props) => {
             <Link
               to="/"
               style={{ color: "inherit", textDecoration: "inherit" }}
-              onClick={() => dispatch(changeCurrentTest("MainPage"))}
             >
               <img
                 alt="logopage"
@@ -62,28 +60,24 @@ const MainNavbar = (props) => {
             <Link
               to="/Ielts"
               style={{ color: "inherit", textDecoration: "inherit" }}
-              onClick={() => dispatch(changeCurrentTest("Ielts"))}
             >
               IELTS
             </Link>
             <Link
               to="/Toefl"
               style={{ color: "inherit", textDecoration: "inherit" }}
-              onClick={() => dispatch(changeCurrentTest("Toefl"))}
             >
               TOEFL
             </Link>
             <Link
               to="/SAT"
               style={{ color: "inherit", textDecoration: "inherit" }}
-              onClick={() => dispatch(changeCurrentTest("SAT"))}
             >
               SAT
             </Link>
             <Link
               to="/ACT"
               style={{ color: "inherit", textDecoration: "inherit" }}
-              onClick={() => dispatch(changeCurrentTest("ACT"))}
             >
               ACT
             </Link>

@@ -2,11 +2,13 @@ import React from "react";
 import Pagination from "../../components/PaginationPart";
 import Tools from "../../components/Tools";
 import QuestionPart from "../../components/QuestionPart";
+import Answerpart from "../../components/AnswersPart";
 
 import { Row, Col, Container } from "reactstrap";
 
 const SATMathNoCal = (props) => {
   const { data } = props;
+
   return (
     <div>
       <Container>
@@ -14,11 +16,17 @@ const SATMathNoCal = (props) => {
           <Col>
             <QuestionPart
               QuestionImgSrc={data}
-              style={{ overflowY: "auto", height: "450px" }}
+              style={{
+                overflowY: "auto",
+                overflowX: "hidden",
+                height: "500px",
+              }}
             ></QuestionPart>
           </Col>
-          <Col style={{ overflowY: "auto", height: "450px" }}>
-            {/* {Answerpart} */}
+          <Col
+            style={{ overflowY: "auto", height: "450px", marginTop: "20px" }}
+          >
+            <Answerpart></Answerpart>
           </Col>
         </Row>
       </Container>

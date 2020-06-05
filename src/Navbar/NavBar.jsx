@@ -2,9 +2,59 @@ import React from "react";
 import LogoPage2 from "../img/Logo2.png";
 import Button from "../components/Button";
 import { Link } from "react-router-dom";
+import { unFlaggedAll, deleteAnswerStore } from "../redux/Actions";
+import { useDispatch } from "react-redux";
+import EndButton from "../components/EndButton";
 
 const NavBar = (props) => {
+  const dispatch = useDispatch();
   let { section, test, testNumb, QuestionNumb } = props;
+
+  let nextButton = (
+    <Link
+      to={`/${test}/${testNumb}/${section}/${QuestionNumb + 1}`}
+      style={{ textDecoration: "inherit" }}
+    >
+      <Button ButtonText="Next"></Button>
+    </Link>
+  );
+  if (test === "SAT") {
+    if (section === "Reading") {
+      if (QuestionNumb === 52) {
+        nextButton = <div></div>;
+      }
+    } else if (section === "Writing") {
+      if (QuestionNumb === 44) {
+        nextButton = <div></div>;
+      }
+    } else if (section === "Math Test No Calculator") {
+      if (QuestionNumb === 20) {
+        nextButton = <div></div>;
+      }
+    } else if (section === "Math Test Calculator") {
+      if (QuestionNumb === 38) {
+        nextButton = <div></div>;
+      }
+    }
+  } else if (test === "ACT") {
+    if (section === "Reading") {
+      if (QuestionNumb === 40) {
+        nextButton = <div></div>;
+      }
+    } else if (section === "English") {
+      if (QuestionNumb === 75) {
+        nextButton = <div></div>;
+      }
+    } else if (section === "Mathematics") {
+      if (QuestionNumb === 60) {
+        nextButton = <div></div>;
+      }
+    } else if (section === "Science") {
+      if (QuestionNumb === 40) {
+        nextButton = <div></div>;
+      }
+    }
+  }
 
   return (
     <div className="Nav-bar">
@@ -43,7 +93,14 @@ const NavBar = (props) => {
             alignItems: "center",
           }}
         >
-          <Link to={`/${test}`} style={{ textDecoration: "inherit" }}>
+          <Link
+            to={`/${test}`}
+            style={{ textDecoration: "inherit" }}
+            onClick={() => {
+              dispatch(unFlaggedAll());
+              dispatch(deleteAnswerStore());
+            }}
+          >
             <Button ButtonText="Home"></Button>
           </Link>
         </div>
@@ -74,13 +131,8 @@ const NavBar = (props) => {
               <Button ButtonText="Prev"></Button>
             </Link>
           )}
-          <Link
-            to={`/${test}/${testNumb}/${section}/${QuestionNumb + 1}`}
-            style={{ textDecoration: "inherit" }}
-          >
-            <Button ButtonText="Next"></Button>
-          </Link>
-          <Button ButtonText="End"></Button>
+          {nextButton}
+          <EndButton></EndButton>
         </div>
       </div>
     </div>

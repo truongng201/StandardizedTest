@@ -12,18 +12,16 @@ const PassagePart = (props) => {
         className="PassageScrolling"
         style={{ overflowY: "scroll", overflowX: "hidden", height: "450px" }}
       >
-        {PassageImgSrc.map((paragraphImgSrc) =>
-          paragraphImgSrc.Pra.map((pra, index) => (
-            <img
-              key={index}
-              src={`${pra}.png`}
-              alt="icon"
-              height="auto"
-              width="auto"
-              style={{ objectFit: "cover" }}
-            ></img>
-          ))
-        )}
+        {PassageImgSrc.Pra.map((pra, index) => (
+          <img
+            key={index}
+            src={`${pra}.png`}
+            alt="icon"
+            height="auto"
+            width="auto"
+            style={{ objectFit: "cover" }}
+          ></img>
+        ))}
       </div>
     </div>
   );

@@ -22,13 +22,6 @@ export const logOut = () => {
   };
 };
 
-export const changeCurrentTest = (currentTest) => {
-  return {
-    type: "CURRENT TEST",
-    currentTest: currentTest,
-  };
-};
-
 export const ShowPagination = (isShown) => {
   return {
     type: "SHOW PAGINATION",
@@ -56,14 +49,39 @@ export const unFlaggedAll = () => {
   };
 };
 
+export const Choice = (Question, Choice) => {
+  return {
+    type: "CHOICE",
+    Question: Question,
+    Choice: Choice,
+  };
+};
+
+export const ChangeChoice = (Question, newChoice, indexOfAnswerChanged) => {
+  return {
+    type: "CHANGE CHOICE",
+    Question: Question,
+    newChoice: newChoice,
+    indexOfAnswerChanged: indexOfAnswerChanged,
+  };
+};
+
+export const deleteAnswerStore = () => {
+  return {
+    type: "DELETE ANSWER STORE",
+  };
+};
+
 export default {
   changeToSignUp,
   changeToSignIn,
   logIn,
   logOut,
-  changeCurrentTest,
   ShowPagination,
   unFlaggedAll,
   Flag,
   Unflag,
+  ChangeChoice,
+  Choice,
+  deleteAnswerStore,
 };

@@ -3,8 +3,9 @@ import { useParams } from "react-router-dom";
 
 const QuestionPart = (props) => {
   let { QuestionNumb } = useParams();
+
   return (
-    <div className="QuestionPart">
+    <div className="QuestionPart" style={props.style}>
       <img
         src={`${props.QuestionImgSrc[QuestionNumb - 1]}.png`}
         alt="imgsrc"
