@@ -4,6 +4,7 @@ import Tools from "../../components/Tools";
 import QuestionPart from "../../components/QuestionPart";
 import { Row, Col, Container } from "reactstrap";
 import Answerpart from "../../components/AnswersPart";
+import Timer from "../../components/Timer";
 
 const SATMathCal = (props) => {
   const { data } = props;
@@ -26,6 +27,7 @@ const SATMathCal = (props) => {
           </Col>
         </Row>
       </Container>
+      <Timer time={55}></Timer>
       <Pagination numberOfPagesShown={19} numberOfQuestion={38}></Pagination>
       <Tools></Tools>
     </div>

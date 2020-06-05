@@ -3,7 +3,7 @@ import Pagination from "../../components/PaginationPart";
 import Tools from "../../components/Tools";
 import PassagePart from "../../components/PassagePart";
 import QuestionPart from "../../components/QuestionPart";
-
+import Timer from "../../components/Timer";
 import { Row, Col, Container } from "reactstrap";
 
 const ACTScience = (props) => {
@@ -26,6 +26,7 @@ const ACTScience = (props) => {
           </Col>
         </Row>
       </Container>
+      <Timer time={35}></Timer>
       <Pagination numberOfPagesShown={10} numberOfQuestion={40}></Pagination>
       <Tools></Tools>
     </div>

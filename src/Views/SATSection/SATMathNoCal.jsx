@@ -3,7 +3,7 @@ import Pagination from "../../components/PaginationPart";
 import Tools from "../../components/Tools";
 import QuestionPart from "../../components/QuestionPart";
 import Answerpart from "../../components/AnswersPart";
-
+import Timer from "../../components/Timer";
 import { Row, Col, Container } from "reactstrap";
 
 const SATMathNoCal = (props) => {
@@ -30,6 +30,7 @@ const SATMathNoCal = (props) => {
           </Col>
         </Row>
       </Container>
+      <Timer time={25}></Timer>
       <Pagination numberOfPagesShown={10} numberOfQuestion={20}></Pagination>
       <Tools></Tools>
     </div>

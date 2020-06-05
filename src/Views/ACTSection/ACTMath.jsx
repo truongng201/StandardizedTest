@@ -4,6 +4,7 @@ import Tools from "../../components/Tools";
 import QuestionPart from "../../components/QuestionPart";
 import { Row, Col, Container } from "reactstrap";
 import AnswersPart from "../../components/AnswersPart";
+import Timer from "../../components/Timer";
 
 const ACTMath = (props) => {
   const { data } = props;
@@ -22,6 +23,7 @@ const ACTMath = (props) => {
           </Col>
         </Row>
       </Container>
+      <Timer time={60}></Timer>
       <Pagination numberOfPagesShown={15} numberOfQuestion={60}></Pagination>
       <Tools></Tools>
     </div>

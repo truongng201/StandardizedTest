@@ -5,6 +5,7 @@ import PassagePart from "../../components/PassagePart";
 import QuestionPart from "../../components/QuestionPart";
 import { useParams } from "react-router-dom";
 import { Row, Col, Container } from "reactstrap";
+import Timer from "../../components/Timer";
 
 const ACTReading = (props) => {
   const { data } = props;
@@ -47,6 +48,7 @@ const ACTReading = (props) => {
           </Col>
         </Row>
       </Container>
+      <Timer time={35}></Timer>
       <Pagination numberOfPagesShown={10} numberOfQuestion={40}></Pagination>
       <Tools></Tools>
     </div>

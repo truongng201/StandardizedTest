@@ -6,6 +6,7 @@ import QuestionPart from "../../components/QuestionPart";
 import Answerpart from "../../components/AnswersPart";
 import { Row, Col, Container } from "reactstrap";
 import { useParams } from "react-router-dom";
+import Timer from "../../components/Timer";
 
 const SATReading = (props) => {
   const { data } = props;
@@ -51,6 +52,7 @@ const SATReading = (props) => {
           </Col>
         </Row>
       </Container>
+      <Timer time={65}></Timer>
       <Pagination numberOfPagesShown={13} numberOfQuestion={52}></Pagination>
       <Tools></Tools>
     </div>
