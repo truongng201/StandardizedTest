@@ -8,7 +8,7 @@ const AnswersStore = (state = [], action) => {
         return numA - numB;
       };
       state.sort(sortQuestion);
-      console.log(state);
+
       return state;
     case "CHANGE CHOICE":
       state = [

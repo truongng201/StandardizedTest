@@ -5,6 +5,7 @@ import PassagePart from "../../components/PassagePart";
 import QuestionPart from "../../components/QuestionPart";
 import Timer from "../../components/Timer";
 import { Row, Col, Container } from "reactstrap";
+import Answerpart from "../../components/AnswersPart";
 
 const ACTScience = (props) => {
   const { data } = props;
@@ -23,6 +24,7 @@ const ACTScience = (props) => {
             }}
           >
             <QuestionPart QuestionImgSrc={data.QuestionImgSrc}></QuestionPart>
+            <Answerpart></Answerpart>
           </Col>
         </Row>
       </Container>

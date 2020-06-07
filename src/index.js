@@ -2,21 +2,47 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App.jsx";
 import * as serviceWorker from "./serviceWorker";
+// import firebase from "firebase/app";
 import AllReducers from "./redux/Reducers";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
 import "bootstrap/dist/css/bootstrap.min.css";
+import thunk from "redux-thunk";
+import firebase from "./config/fbconfig";
+import { ReactReduxFirebaseProvider, getFirebase } from "react-redux-firebase";
+import {
+  createFirestoreInstance,
+  getFirestore,
+  reduxFirestore,
+} from "redux-firestore";
 
-const myStore = createStore(
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+let myStore = createStore(
   AllReducers,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  composeEnhancers(
+    applyMiddleware(thunk.withExtraArgument({ getFirestore, getFirebase })),
+    reduxFirestore(firebase)
+  )
 );
+
+const rrfConfig = {
+  userProfile: "users",
+  useFirestoreForProfile: true, // Firestore for Profile instead of Realtime DB
+};
+// console.log(firebase);
+const rrfProps = {
+  firebase,
+  config: rrfConfig,
+  dispatch: myStore.dispatch,
+  createFirestoreInstance,
+};
 
 ReactDOM.render(
   <Provider store={myStore}>
-    <React.StrictMode>
+    <ReactReduxFirebaseProvider {...rrfProps}>
       <App />
-    </React.StrictMode>
+    </ReactReduxFirebaseProvider>
   </Provider>,
   document.getElementById("root")
 );

@@ -3,29 +3,49 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import {
   unFlaggedAll,
   deleteAnswerStore,
-  //   sendAnswerToFirebase
+  sendAnswerToFirebase,
 } from "../redux/Actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 
 const EndButton = (props) => {
   const { className } = props;
   const dispatch = useDispatch();
-
-  let { currentTest } = useParams();
+  const AnswersStore = useSelector((state) => state.AnswersStore);
+  let { currentTest, currentSection, currentTestNumb } = useParams();
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
-  //   let indexOfResult = Results.findIndex(
-  //     TestIsDone =>
-  //       TestIsDone.test === currentTestNumb &&
-  //       TestIsDone.section === currentSection
-  //   );
+  const auth = useSelector((state) => state.firebase.auth);
+  let profile = useSelector((state) => state.firebase.profile);
+
+  //get test taken date
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, "0");
+  var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+  var yyyy = today.getFullYear();
+
   const EndSection = () => {
     return () => {
       toggle();
       dispatch(deleteAnswerStore());
       dispatch(unFlaggedAll());
+      if (AnswersStore.length > 0) {
+        let TestDone = profile.TestDone.concat({
+          Test: `${currentTest}`,
+          TestNumb: `${currentTestNumb}`,
+          Section: `${currentSection}`,
+          Score: "none",
+          Answers: AnswersStore,
+          TestTakenDate: {
+            day: dd,
+            month: mm,
+            year: yyyy,
+          },
+        });
+
+        dispatch(sendAnswerToFirebase(auth.uid, TestDone));
+      }
     };
   };
 

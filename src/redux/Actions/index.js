@@ -10,18 +10,6 @@ export const changeToSignUp = () => {
   };
 };
 
-export const logIn = () => {
-  return {
-    type: "LOG IN",
-  };
-};
-
-export const logOut = () => {
-  return {
-    type: "LOG OUT",
-  };
-};
-
 export const ShowPagination = (isShown) => {
   return {
     type: "SHOW PAGINATION",
@@ -72,11 +60,29 @@ export const deleteAnswerStore = () => {
   };
 };
 
+export const sendAnswerToFirebase = (UserId, TestDone) => {
+  return (dispatch, getState, { getFirestore }) => {
+    //make async call to database
+    const firestore = getFirestore();
+
+    firestore
+      .collection(`users`)
+      .doc(`${UserId}`)
+      .update({
+        TestDone: TestDone,
+      })
+      .then(() => {
+        dispatch({ type: "SEND ANSWER TO FIREBASE" });
+      })
+      .catch((err) => {
+        dispatch({ type: "FAIL TO SEND " }, err);
+      });
+  };
+};
+
 export default {
   changeToSignUp,
   changeToSignIn,
-  logIn,
-  logOut,
   ShowPagination,
   unFlaggedAll,
   Flag,
@@ -84,4 +90,5 @@ export default {
   ChangeChoice,
   Choice,
   deleteAnswerStore,
+  sendAnswerToFirebase,
 };

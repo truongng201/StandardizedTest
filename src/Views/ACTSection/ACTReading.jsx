@@ -6,6 +6,7 @@ import QuestionPart from "../../components/QuestionPart";
 import { useParams } from "react-router-dom";
 import { Row, Col, Container } from "reactstrap";
 import Timer from "../../components/Timer";
+import Answerpart from "../../components/AnswersPart";
 
 const ACTReading = (props) => {
   const { data } = props;
@@ -45,6 +46,7 @@ const ACTReading = (props) => {
             }}
           >
             <QuestionPart QuestionImgSrc={data.QuestionImgSrc}></QuestionPart>
+            <Answerpart></Answerpart>
           </Col>
         </Row>
       </Container>

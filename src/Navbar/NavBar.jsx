@@ -132,7 +132,7 @@ const NavBar = (props) => {
             </Link>
           )}
           {nextButton}
-          <EndButton></EndButton>
+          {QuestionNumb > 0 && <EndButton></EndButton>}
         </div>
       </div>
     </div>

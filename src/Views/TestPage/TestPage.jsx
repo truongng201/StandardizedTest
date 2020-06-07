@@ -2,8 +2,11 @@ import React from "react";
 import MainNavBar from "../../Navbar/MainNavBar";
 import TestBox from "../../components/TestBox";
 
+import PracticeProcess from "./PracticeProcess";
+
 const TestPage = (props) => {
   const { test, Backgroundimg, numbsPracticeTest, Logo, Sections } = props;
+
   let LeftPart = [];
   var i;
   for (i = 1; i <= numbsPracticeTest; i++) {
@@ -66,6 +69,7 @@ const TestPage = (props) => {
         >
           Let's get started with {test} practice test
         </div>
+
         <div
           style={{
             display: "grid",
@@ -100,21 +104,7 @@ const TestPage = (props) => {
             >
               Your Practice Process
             </div>
-            <div
-              style={{
-                textAlign: "center",
-                fontSize: "18px",
-                letterSpacing: "0.2px",
-                color: "#CA005E",
-                fontWeight: "bold",
-                height: "50vh",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              You haven't done anything yet
-            </div>
+            <PracticeProcess></PracticeProcess>
           </div>
           <div
             style={{
