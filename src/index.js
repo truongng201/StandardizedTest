@@ -16,11 +16,11 @@ import {
   reduxFirestore,
 } from "redux-firestore";
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 let myStore = createStore(
   AllReducers,
-  composeEnhancers(
+  compose(
     applyMiddleware(thunk.withExtraArgument({ getFirestore, getFirebase })),
     reduxFirestore(firebase)
   )

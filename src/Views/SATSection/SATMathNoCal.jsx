@@ -5,10 +5,23 @@ import QuestionPart from "../../components/QuestionPart";
 import Answerpart from "../../components/AnswersPart";
 import Timer from "../../components/Timer";
 import { Row, Col, Container } from "reactstrap";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import ShowResults from "../../components/ShowResults";
 
 const SATMathNoCal = (props) => {
   const { data } = props;
-
+  let { QuestionNumb, currentTest, currentSection } = useParams();
+  let profile = useSelector((state) => state.firebase.profile);
+  let TestDoneFilter;
+  if (!profile.isEmpty) {
+    TestDoneFilter = profile.TestDone.findIndex(
+      (TestIsDone) =>
+        TestIsDone.Test === currentTest &&
+        TestIsDone.TestNumb === `${QuestionNumb}` &&
+        TestIsDone.Section === currentSection
+    );
+  }
   return (
     <div>
       <Container>
@@ -26,11 +39,20 @@ const SATMathNoCal = (props) => {
           <Col
             style={{ overflowY: "auto", height: "450px", marginTop: "20px" }}
           >
-            <Answerpart></Answerpart>
+            {TestDoneFilter === -1 && <Answerpart></Answerpart>}
           </Col>
         </Row>
       </Container>
-      <Timer time={25}></Timer>
+      {TestDoneFilter === -1 && <Timer time={25}></Timer>}
+      {TestDoneFilter !== -1 && (
+        <div style={{ position: "fixed", top: "100px", right: "50px" }}>
+          <ShowResults
+            currentTest={currentTest}
+            PracticeTestIndex={QuestionNumb}
+            section={currentSection}
+          ></ShowResults>
+        </div>
+      )}
       <Pagination numberOfPagesShown={10} numberOfQuestion={20}></Pagination>
       <Tools></Tools>
     </div>

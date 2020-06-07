@@ -35,7 +35,6 @@ const EndButton = (props) => {
           Test: `${currentTest}`,
           TestNumb: `${currentTestNumb}`,
           Section: `${currentSection}`,
-          Score: "none",
           Answers: AnswersStore,
           TestTakenDate: {
             day: dd,

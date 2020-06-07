@@ -82,7 +82,7 @@ const PracticeProcess = () => {
                 >
                   {record.TestTakenDate.day}/{record.TestTakenDate.month}/
                   {record.TestTakenDate.year} : {record.Test} {record.TestNumb}{" "}
-                  {record.Section} Score: {record.Score}
+                  {record.Section}
                 </div>
               ))}
             </div>

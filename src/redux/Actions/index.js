@@ -80,6 +80,26 @@ export const sendAnswerToFirebase = (UserId, TestDone) => {
   };
 };
 
+export const redoTest = (UserId, TestDone) => {
+  return (dispatch, getState, { getFirestore }) => {
+    //make async call to database
+    const firestore = getFirestore();
+
+    firestore
+      .collection(`users`)
+      .doc(`${UserId}`)
+      .update({
+        TestDone: TestDone,
+      })
+      .then(() => {
+        dispatch({ type: "SEND ANSWER TO FIREBASE" });
+      })
+      .catch((err) => {
+        dispatch({ type: "FAIL TO SEND " }, err);
+      });
+  };
+};
+
 export default {
   changeToSignUp,
   changeToSignIn,
@@ -91,4 +111,5 @@ export default {
   Choice,
   deleteAnswerStore,
   sendAnswerToFirebase,
+  redoTest,
 };

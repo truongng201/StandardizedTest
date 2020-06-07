@@ -7,10 +7,22 @@ import Answerpart from "../../components/AnswersPart";
 import { Row, Col, Container } from "reactstrap";
 import { useParams } from "react-router-dom";
 import Timer from "../../components/Timer";
+import { useSelector } from "react-redux";
+import ShowResults from "../../components/ShowResults";
 
 const SATWriting = (props) => {
   const { data } = props;
-  let { QuestionNumb } = useParams();
+  let { QuestionNumb, currentTest, currentSection } = useParams();
+  let profile = useSelector((state) => state.firebase.profile);
+  let TestDoneFilter;
+  if (!profile.isEmpty) {
+    TestDoneFilter = profile.TestDone.findIndex(
+      (TestIsDone) =>
+        TestIsDone.Test === currentTest &&
+        TestIsDone.TestNumb === `${QuestionNumb}` &&
+        TestIsDone.Section === currentSection
+    );
+  }
   let PassageImgSrc;
   switch (true) {
     case QuestionNumb < 12:
@@ -43,11 +55,20 @@ const SATWriting = (props) => {
             }}
           >
             <QuestionPart QuestionImgSrc={data.QuestionImgSrc}></QuestionPart>
-            <Answerpart></Answerpart>
+            {TestDoneFilter === -1 && <Answerpart></Answerpart>}
           </Col>
         </Row>
       </Container>
-      <Timer time={35}></Timer>
+      {TestDoneFilter === -1 && <Timer time={35}></Timer>}
+      {TestDoneFilter !== -1 && (
+        <div style={{ position: "fixed", top: "100px", right: "50px" }}>
+          <ShowResults
+            currentTest={currentTest}
+            PracticeTestIndex={QuestionNumb}
+            section={currentSection}
+          ></ShowResults>
+        </div>
+      )}
       <Pagination numberOfPagesShown={11} numberOfQuestion={44}></Pagination>
       <Tools></Tools>
     </div>

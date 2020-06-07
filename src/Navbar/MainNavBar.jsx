@@ -36,15 +36,7 @@ const MainNavbar = (props) => {
 
   const logOut = () => {
     return () => {
-      firebase
-        .auth()
-        .signOut()
-        .then(function () {
-          console.log("successs");
-        })
-        .catch(function (error) {
-          // An error happened.
-        });
+      firebase.auth().signOut();
     };
   };
 

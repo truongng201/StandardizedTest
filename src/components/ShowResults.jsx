@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ResultsIcon from "../img/results.svg";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import Loading from "./Loading";
+import firebase from "../config/fbconfig";
+import TableResult from "./TableResult";
+import { redoTest } from "../redux/Actions";
 
 const ShowResults = (props) => {
   const { className, section, currentTest, PracticeTestIndex } = props;
@@ -10,10 +13,14 @@ const ShowResults = (props) => {
   const [nestedModal, setNestedModal] = useState(false);
   const [closeAll, setCloseAll] = useState(false);
   let profile = useSelector((state) => state.firebase.profile);
+  let auth = useSelector((state) => state.firebase.auth);
+  let [RawScores, setRawScores] = useState();
   let userAnswer;
   let [modalBody, setModalBody] = useState();
-  let [Answers, setAnswers] = useState([1]);
+  let [Answers, setAnswers] = useState(undefined);
   let TestDoneFilter;
+  const dispatch = useDispatch();
+
   const toggle = () => setModal(!modal);
 
   const toggleNested = () => {
@@ -27,7 +34,15 @@ const ShowResults = (props) => {
 
   const TestReDo = () => {
     return () => {
+      console.log(TestDoneFilter);
+      let TestsDone = profile.TestDone;
+
+      if (TestDoneFilter !== -1) {
+        TestsDone.splice(TestDoneFilter, 1);
+      }
+
       toggle();
+      dispatch(redoTest(auth.uid, TestsDone));
     };
   };
 
@@ -45,7 +60,7 @@ const ShowResults = (props) => {
 
   const RenderModalBody = (AnswersList, UserAnswersList) => {
     return new Promise((resolve, reject) => {
-      if (AnswersList.length > 0 && UserAnswersList.length > 0) {
+      if (AnswersList !== undefined && UserAnswersList.length > 0) {
         resolve(true);
       } else {
         reject(false);
@@ -54,14 +69,45 @@ const ShowResults = (props) => {
   };
 
   useEffect(() => {
+    const db = firebase.firestore();
+    let unmounted = false;
+
+    db.collection(currentTest)
+      .get()
+      .then((snapshot) => {
+        snapshot.docs.forEach((doc) => {
+          var test = `${currentTest}${PracticeTestIndex}`;
+          if (!unmounted) {
+            if (doc.id === test) {
+              setAnswers(doc.data().Answers);
+              setRawScores(doc.data().Answers.RawScores);
+            }
+          }
+        });
+      });
+
+    return () => {
+      unmounted = true;
+    };
+  }, [PracticeTestIndex, currentTest]);
+
+  useEffect(() => {
     RenderModalBody(Answers, userAnswer)
       .then((res) => {
-        setModalBody(<div>correct answer is not uploaded please wait</div>);
+        setModalBody(
+          <TableResult
+            section={section}
+            Answers={Answers}
+            userAnswer={userAnswer}
+            currentTest={currentTest}
+            currentTestNumb={PracticeTestIndex}
+          ></TableResult>
+        );
       })
       .catch((err) => {
         setModalBody(<Loading></Loading>);
       });
-  }, [Answers, section, userAnswer]);
+  }, [Answers, section, userAnswer, PracticeTestIndex, currentTest]);
 
   return (
     <div>
@@ -94,9 +140,9 @@ const ShowResults = (props) => {
             style={{ maxWidth: "900px" }}
           >
             <ModalHeader>Raw Scores</ModalHeader>
-            {/* <ModalBody>
+            <ModalBody>
               <img alt="pic" src={`${RawScores}.png`}></img>
-            </ModalBody> */}
+            </ModalBody>
             <ModalFooter>
               <Button color="primary" onClick={toggleNested}>
                 Done
