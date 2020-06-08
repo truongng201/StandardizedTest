@@ -12,14 +12,19 @@ import ShowResults from "../../components/ShowResults";
 
 const SATWriting = (props) => {
   const { data } = props;
-  let { QuestionNumb, currentTest, currentSection } = useParams();
+  let {
+    QuestionNumb,
+    currentTest,
+    currentSection,
+    currentTestNumb,
+  } = useParams();
   let profile = useSelector((state) => state.firebase.profile);
   let TestDoneFilter;
   if (!profile.isEmpty) {
     TestDoneFilter = profile.TestDone.findIndex(
       (TestIsDone) =>
         TestIsDone.Test === currentTest &&
-        TestIsDone.TestNumb === `${QuestionNumb}` &&
+        TestIsDone.TestNumb === `${currentTestNumb}` &&
         TestIsDone.Section === currentSection
     );
   }
@@ -64,7 +69,7 @@ const SATWriting = (props) => {
         <div style={{ position: "fixed", top: "100px", right: "50px" }}>
           <ShowResults
             currentTest={currentTest}
-            PracticeTestIndex={QuestionNumb}
+            PracticeTestIndex={currentTestNumb}
             section={currentSection}
           ></ShowResults>
         </div>
