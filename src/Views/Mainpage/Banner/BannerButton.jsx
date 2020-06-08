@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const BannerButton = () => {
   return (
@@ -16,7 +17,8 @@ const BannerButton = () => {
         justifyContent: "center",
       }}
     >
-      <div
+      <Link
+        to="/login"
         style={{
           background:
             "linear-gradient(to bottom, #CA005E 0%, #E4428D 70%, #E87EB0 100%)",
@@ -24,10 +26,12 @@ const BannerButton = () => {
           padding: "10px",
           borderRadius: "30px",
           fontSize: "18px",
+          textDecoration: "inherit",
+          color: "white",
         }}
       >
         Get started
-      </div>
+      </Link>
     </div>
   );
 };

@@ -8,6 +8,7 @@ import Timer from "../../components/Timer";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import ShowResults from "../../components/ShowResults";
+import TypeAnswerPart from "../../components/TypeAnswerPart";
 
 const SATMathCal = (props) => {
   const { data } = props;
@@ -31,13 +32,21 @@ const SATMathCal = (props) => {
               QuestionImgSrc={data}
               style={{
                 overflowY: "auto",
-                overflowX: "hidden",
+                overflowX: "auto",
                 height: "500px",
+                marginTOp: "20px",
               }}
             ></QuestionPart>
           </Col>
-          <Col style={{ overflowY: "auto", height: "450px" }}>
-            {TestDoneFilter === -1 && <Answerpart></Answerpart>}
+          <Col
+            style={{ overflowY: "auto", overflowX: "auto", height: "450px" }}
+          >
+            {TestDoneFilter === -1 && QuestionNumb < 31 && (
+              <Answerpart></Answerpart>
+            )}
+            {TestDoneFilter === -1 && QuestionNumb > 30 && (
+              <TypeAnswerPart></TypeAnswerPart>
+            )}
           </Col>
         </Row>
       </Container>

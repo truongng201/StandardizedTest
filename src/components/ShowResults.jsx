@@ -34,7 +34,6 @@ const ShowResults = (props) => {
 
   const TestReDo = () => {
     return () => {
-      console.log(TestDoneFilter);
       let TestsDone = profile.TestDone;
 
       if (TestDoneFilter !== -1) {

@@ -21,11 +21,11 @@ const TableResult = (props) => {
           numberOfQuestion = 44;
           break;
         case "Math Test No Calculator":
-          Answer = Answers.MathCal;
+          Answer = Answers.MathNoCal;
           numberOfQuestion = 20;
           break;
         case "Math Test Calculator":
-          Answer = Answers.MathNoCal;
+          Answer = Answers.MathCal;
           numberOfQuestion = 38;
           break;
         default:

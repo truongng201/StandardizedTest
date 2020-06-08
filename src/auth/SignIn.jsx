@@ -2,28 +2,30 @@ import React, { useState } from "react";
 import usernameIcon from "../img/usernameIcon.png";
 import passwordIcon from "../img/passwordIcon.png";
 import { Button } from "reactstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { changeToSignUp } from "../redux/Actions";
-
 import { useHistory } from "react-router-dom";
-import { useFirebase, isLoaded } from "react-redux-firebase";
+import firebase from "../config/fbconfig";
 
 const SignIn = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [emailvalue, setEmailvalue] = useState("");
   const [passwordvalue, setPasswordvalue] = useState("");
-  const firebase = useFirebase();
-  const auth = useSelector((state) => state.firebase.auth);
+
   const LogIn = () => {
     return () => {
-      firebase.login({ email: emailvalue, password: passwordvalue });
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(emailvalue, passwordvalue)
+        .catch(function (error) {
+          // Handle Errors here.
+        });
 
-      if (isLoaded(auth)) {
-        history.goBack();
-      }
+      history.goBack();
     };
   };
+
   const goToSignUp = () => {
     return () => {
       dispatch(changeToSignUp());
@@ -48,7 +50,7 @@ const SignIn = () => {
             <input
               type="email"
               className="email"
-              placeholder="Username or Email"
+              placeholder="Email"
               value={emailvalue}
               onChange={handleChangeEmail}
             />
@@ -89,7 +91,8 @@ const SignIn = () => {
 
       <div className="OAuth">
         <div className="OAuth-facebook">
-          <div className="fa fa-facebook fa-fw"></div> Login with Facebook
+          <i className="fa fa-facebook fa-fw"></i>
+          Login with Facebook
         </div>
         <div className="OAuth-gmail">
           <i className="fa fa-google fa-fw"></i> Login with Gmail

@@ -7,6 +7,7 @@ import Timer from "../../components/Timer";
 import { Row, Col, Container } from "reactstrap";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import TypeAnswerPart from "../../components/TypeAnswerPart";
 import ShowResults from "../../components/ShowResults";
 
 const SATMathNoCal = (props) => {
@@ -37,9 +38,19 @@ const SATMathNoCal = (props) => {
             ></QuestionPart>
           </Col>
           <Col
-            style={{ overflowY: "auto", height: "450px", marginTop: "20px" }}
+            style={{
+              overflowY: "auto",
+              overflowX: "auto",
+              height: "450px",
+              marginTop: "20px",
+            }}
           >
-            {TestDoneFilter === -1 && <Answerpart></Answerpart>}
+            {TestDoneFilter === -1 && QuestionNumb < 16 && (
+              <Answerpart></Answerpart>
+            )}
+            {TestDoneFilter === -1 && QuestionNumb > 15 && (
+              <TypeAnswerPart></TypeAnswerPart>
+            )}
           </Col>
         </Row>
       </Container>
